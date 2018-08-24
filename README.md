@@ -41,8 +41,7 @@ var config = {
 | Option           | Type       | Default 		| Description
 |----------------- |----------- |-------------- | ---------------
 | `url`        	   | `string`	| `http://api.icndb.com/jokes/random` | Address to fetch jokes from. See http://www.icndb.com/api/ for mor options.
-| `updateInterval` | `number`	| `60000`		|  
-| `retryDelay` 	   | `number`	| `5000`		|  
+| `updateInterval` | `number`	| `60`		|  Update interval in seconds
 | `maxWidth`       | `string`   | `200px`       | Max width of the module
 | `header`         | `boolean|string` | `false` | Control the header line. *Values:* `true`, `false` or `Custom text`
 | `headerClasses`  | `string`   | `small light` | CSS classes applied to the header, if any
