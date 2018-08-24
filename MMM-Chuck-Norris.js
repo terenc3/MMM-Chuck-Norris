@@ -22,13 +22,14 @@ Module.register('MMM-Chuck-Norris', {
 		this.joke = false;
 
 		this.sendSocketNotification('JOKE_GET', {
+			identifier: this.identifier,
 			url: this.config.url,
 			interval: this.config.updateInterval
 		});
 	},
 
 	socketNotificationReceived: function (notification, payload) {
-		if (notification === 'JOKE_DATA') {
+		if (notification === 'JOKE_DATA' && payload.identifier === this.identifier) {
 			this.joke = payload.joke;
 
 			this.updateDom();

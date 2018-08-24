@@ -8,7 +8,9 @@ var node_helper = require('node_helper');
 var request = require('request');
 
 module.exports = node_helper.create({
-	getJoke: function (url, interval) {
+	instances: [],
+
+	getJoke: function (identifier, url, interval) {
 		var self = this;
 
 		request({
@@ -20,21 +22,36 @@ module.exports = node_helper.create({
 				return;
 			}
 
-			var data = JSON.parse(body).value;
+			var joke = JSON.parse(body).value.joke;
 
-			self.sendSocketNotification('JOKE_DATA', {
-				joke: data.joke
-			});
+			self.instances[identifier] = joke;
+
+			self.sendUpdate(identifier, joke);
 
 			setTimeout(function() {
-				self.getJoke(url, interval);
+				self.getJoke(identifier, url, interval);
 			}, interval * 1000);
 		});
 	},
 
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === 'JOKE_GET') {
-			this.getJoke(payload.url, payload.interval, this.done);
+			if (this.instances[payload.identifier]) {
+				if (typeof this.instances[payload.identifier] === 'string') {
+					this.sendUpdate(payload.identifier, this.instances[payload.identifier]);
+				}
+				return;
+			}
+			this.instances[payload.identifier] = true;
+
+			this.getJoke(payload.identifier, payload.url, payload.interval, this.done);
 		}
+	},
+
+	sendUpdate: function (identifier, joke) {
+		this.sendSocketNotification('JOKE_DATA', {
+			identifier: identifier,
+			joke: joke
+		});
 	}
 });
