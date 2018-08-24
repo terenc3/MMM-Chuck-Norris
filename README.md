@@ -43,6 +43,6 @@ var config = {
 | `url`        	   | `string`	| `http://api.icndb.com/jokes/random` | Address to fetch jokes from. See http://www.icndb.com/api/ for mor options.
 | `updateInterval` | `number`	| `60`		|  Update interval in seconds
 | `maxWidth`       | `string`   | `200px`       | Max width of the module
-| `header`         | `boolean|string` | `false` | Control the header line. *Values:* `true`, `false` or `Custom text`
+| `header`         | `boolean/string` | `false` | Control the header line. *Values:* `true`, `false` or `Custom text`
 | `headerClasses`  | `string`   | `small light` | CSS classes applied to the header, if any
 | `textClasses`    | `string`   | `small light` | CSS classes applied to the joke
