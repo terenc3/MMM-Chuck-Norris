@@ -1,0 +1,22 @@
+{
+  "name": "mmm-chuck-norris",
+  "version": "1.0.0",
+  "description": "This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/) which displays a random Chuck Norris joke from [The Internet Chuck Norris Database ](http://www.icndb.com)",
+  "main": "MMM-Chuck-Norris.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terenc3/MMM-Chuck-Norris.git"
+  },
+  "keywords": [
+    "MagicMirror"
+  ],
+  "author": "Benjamin Kahlau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terenc3/MMM-Chuck-Norris/issues"
+  },
+  "homepage": "https://github.com/terenc3/MMM-Chuck-Norris#readme",
+  "dependencies": {
+    "requests": "^0.2.2"
+  }
+}
