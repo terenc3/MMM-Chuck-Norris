@@ -36,22 +36,14 @@ Module.register('MMM-Chuck-Norris', {
 		}
 	},
 
-	getDom: function() {
-		var wrapper = document.createElement('div');
-		wrapper.style = 'max-width: ' + this.config.maxWidth + ';';
-		if (this.config.header) {
-			var header = document.createElement('header');
-			header.className = this.config.headerClasses;
-			header.innerHTML = typeof this.config.header === 'string' ? this.config.header : 'Chuck Norris';
-			wrapper.appendChild(header);
-		}
+	getTemplate: function () {
+		return "MMM-Chuck-Norris.njk"
+	},
 
-		if (this.joke) {
-			var joke = document.createElement('div');
-			joke.className = this.config.textClasses;
-			joke.innerHTML = this.joke;
-			wrapper.appendChild(joke);
+	getTemplateData: function () {
+		return {
+			config: this.config,
+			joke: this.joke
 		}
-		return wrapper;
 	}
 });
