@@ -18,6 +18,13 @@ Module.register('MMM-Chuck-Norris', {
 
 	requiresVersion: '2.2.0',
 
+	getTranslations: function() {
+		return {
+			en: "i18n/en.json",
+			de: "i18n/de.json"
+		};
+	},
+
 	start: function() {
 		this.joke = false;
 
@@ -29,6 +36,15 @@ Module.register('MMM-Chuck-Norris', {
 	},
 
 	socketNotificationReceived: function (notification, payload) {
+		if (notification === 'JOKE_ERROR' && payload.identifier === this.identifier) {
+			console.log(payload.error);
+			this.sendNotification("SHOW_ALERT", {
+				title: this.name,
+				message: 'Could not fetch data',
+				timer: 3000
+			});
+		}
+
 		if (notification === 'JOKE_DATA' && payload.identifier === this.identifier) {
 			this.joke = payload.joke;
 
@@ -43,7 +59,8 @@ Module.register('MMM-Chuck-Norris', {
 	getTemplateData: function () {
 		return {
 			config: this.config,
-			joke: this.joke
+			joke: this.joke,
+			loading: this.translate('loading')
 		}
 	}
 });

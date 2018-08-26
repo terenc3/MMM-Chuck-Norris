@@ -1,3 +1,7 @@
 <div style="max-width: {{ config.maxWidth }};">
-	<div class="{{ config.textClasses }}">{{ joke }}</div>
+	{% if joke %}
+		<div class="{{ config.textClasses }}">{{ joke | safe }}</div>
+	{% else %}
+		<div class="{{ config.textClasses }}">{{ loading }}</div>
+	{% endif %}
 </div>

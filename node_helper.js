@@ -18,15 +18,18 @@ module.exports = node_helper.create({
 			method: 'GET'
 		}, function (error, response, body) {
 			if (error) {
-				console.error(error);
-				return;
+				return self.sendMessage('JOKE_ERROR', identifier, {
+					error: error.message
+				});
 			}
 
 			var joke = JSON.parse(body).value.joke;
 
 			self.instances[identifier] = joke;
 
-			self.sendUpdate(identifier, joke);
+			self.sendMessage('JOKE_DATA', identifier, {
+				joke: joke
+			});
 
 			setTimeout(function() {
 				self.getJoke(identifier, url, interval);
@@ -36,11 +39,10 @@ module.exports = node_helper.create({
 
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === 'JOKE_GET') {
-			if (this.instances[payload.identifier]) {
-				if (typeof this.instances[payload.identifier] === 'string') {
-					this.sendUpdate(payload.identifier, this.instances[payload.identifier]);
-				}
-				return;
+			if (this.instances[payload.identifier] && typeof this.instances[payload.identifier] === 'string') {
+				return this.sendMessage('JOKE_DATA', payload.identifier, {
+					joke: this.instances[payload.identifier]
+				});
 			}
 			this.instances[payload.identifier] = true;
 
@@ -48,10 +50,9 @@ module.exports = node_helper.create({
 		}
 	},
 
-	sendUpdate: function (identifier, joke) {
-		this.sendSocketNotification('JOKE_DATA', {
-			identifier: identifier,
-			joke: joke
-		});
+	sendMessage: function (message, identifier, payload) {
+		this.sendSocketNotification(message, Object.assign({}, {
+			identifier: identifier
+		}, payload));
 	}
 });
