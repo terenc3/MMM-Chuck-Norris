@@ -1,3 +1,4 @@
 {
-  "loading": "Load data..."
+  "loading": "Load data...",
+  "error": "Could not fetch data"
 }

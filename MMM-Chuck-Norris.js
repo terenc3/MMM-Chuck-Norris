@@ -40,7 +40,7 @@ Module.register('MMM-Chuck-Norris', {
 			console.log(payload.error);
 			this.sendNotification("SHOW_ALERT", {
 				title: this.name,
-				message: 'Could not fetch data',
+				message: this.translate('error'),
 				timer: 3000
 			});
 		}
