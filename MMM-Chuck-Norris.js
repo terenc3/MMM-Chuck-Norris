@@ -16,7 +16,7 @@ Module.register('MMM-Chuck-Norris', {
 		headerClasses: 'module-header'
 	},
 
-	requiresVersion: '2.1.0',
+	requiresVersion: '2.2.0',
 
 	start: function() {
 		this.joke = false;
