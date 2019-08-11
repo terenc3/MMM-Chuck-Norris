@@ -8,7 +8,7 @@ var node_helper = require('node_helper');
 var request = require('request');
 
 module.exports = node_helper.create({
-	instances: [],
+	instances: {},
 
 	getJoke: function (identifier, url, interval) {
 		var self = this;
@@ -39,12 +39,12 @@ module.exports = node_helper.create({
 
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === 'JOKE_GET') {
-			if (this.instances[payload.identifier] && typeof this.instances[payload.identifier] === 'string') {
+			if (payload.identifier in this.instances && this.instances[payload.identifier] !== null) {
 				return this.sendMessage('JOKE_DATA', payload.identifier, {
 					joke: this.instances[payload.identifier]
 				});
 			}
-			this.instances[payload.identifier] = true;
+			this.instances[payload.identifier] = null;
 
 			this.getJoke(payload.identifier, payload.url, payload.interval, this.done);
 		}
